@@ -1,6 +1,7 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:schedulex/pages/auth/login.dart';
 import 'package:schedulex/pages/auth/login_register.dart';
 import 'package:schedulex/pages/home/home.dart';
 //import 'home_page.dart';
@@ -16,6 +17,7 @@ class AuthPage extends StatelessWidget {
         builder: (context, snapshot) {
           // user is logged in
           if (snapshot.hasData) {
+            debugPrint("dfgg");
             return const HomePage();
           }
 
