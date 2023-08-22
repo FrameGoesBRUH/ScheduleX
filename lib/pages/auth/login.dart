@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:schedulex/pages/auth/components/my_button.dart';
 import 'package:schedulex/pages/auth/components/my_textfield.dart';
 import 'package:schedulex/pages/auth/components/square_tile.dart';
+import 'package:schedulex/pages/home/home.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -17,66 +20,69 @@ class _LoginPageState extends State<LoginPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
 
+  bool _wrongpassword = false;
+  bool _wrongemail = false;
   // sign user in method
-  void signUserIn() async {
-    // show loading circle
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
-
+  Future<void> signUserIn() async {
     // try sign in
     try {
-      await FirebaseAuth.instance.signInWithEmailAndPassword(
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,
-      );
+      )
+          .then((value) {
+        setState(() {
+          _wrongemail = false;
+          _wrongpassword = false;
+        });
+        Navigator.push(
+            context, MaterialPageRoute(builder: (context) => HomePage()));
+      });
       // pop the loading circle
-      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
       // pop the loading circle
-      Navigator.pop(context);
       // WRONG EMAIL
       if (e.code == 'user-not-found') {
         // show error to user
-        showError("User Not Found");
+        setState(() {
+          _wrongemail = true;
+        });
       }
 
       // WRONG PASSWORD
       else if (e.code == 'wrong-password') {
         // show error to user
-        showError("Wrong Password");
+        setState(() {
+          _wrongpassword = true;
+        });
       }
     }
   }
 
   // wrong password message popup
-  void showError(String message) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
-          title: Center(
-            child: Text(
-              message,
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-        );
-      },
-    );
+  showError(String message) {
+    if (message == "checkemail") {
+      if (_wrongemail == true) {
+        return "Wrong Email";
+      } else {
+        return null;
+      }
+    } else if (message == "checkpass") {
+      if (_wrongpassword == true) {
+        return "Wrong Password";
+      } else {
+        return null;
+      }
+    } else {
+      return null;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -109,6 +115,8 @@ class _LoginPageState extends State<LoginPage> {
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
+                  error: showError("checkemail"),
+                  //errorText: _wrongemail ? "Wrong Email" : null,
                 ),
 
                 const SizedBox(height: 10),
@@ -118,6 +126,8 @@ class _LoginPageState extends State<LoginPage> {
                   controller: passwordController,
                   hintText: 'Password',
                   obscureText: true,
+                  error: showError("checkpass"),
+                  //errorText: _wrongpassword ? 'Wrong Password' : null,
                 ),
 
                 const SizedBox(height: 10),
@@ -144,7 +154,7 @@ class _LoginPageState extends State<LoginPage> {
                   onTap: signUserIn,
                 ),
 
-                const SizedBox(height: 50),
+                const SizedBox(height: 30),
 
                 // or continue with
                 Padding(
@@ -174,7 +184,7 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
 
-                const SizedBox(height: 50),
+                const SizedBox(height: 20),
 
                 // google + apple sign in buttons
                 const Row(

@@ -5,13 +5,14 @@ class MyTextField extends StatelessWidget {
   final controller;
   final String hintText;
   final bool obscureText;
+  final dynamic error;
 
-  const MyTextField({
-    super.key,
-    required this.controller,
-    required this.hintText,
-    required this.obscureText,
-  });
+  const MyTextField(
+      {super.key,
+      required this.controller,
+      required this.hintText,
+      required this.obscureText,
+      required this.error});
 
   @override
   Widget build(BuildContext context) {
@@ -21,13 +22,26 @@ class MyTextField extends StatelessWidget {
         controller: controller,
         obscureText: obscureText,
         decoration: InputDecoration(
-            enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
+            enabledBorder: OutlineInputBorder(
+              borderRadius: const BorderRadius.all(Radius.circular(20)),
+              borderSide:
+                  BorderSide(color: Colors.orange.withOpacity(0.5), width: 2.0),
             ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.grey.shade400),
+            errorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red, width: 2.0),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
             ),
-            fillColor: Colors.grey.shade200,
+            focusedBorder: const OutlineInputBorder(
+              //<-- SEE HERE
+              borderSide: BorderSide(width: 3, color: Colors.orange),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            focusedErrorBorder: const OutlineInputBorder(
+              borderSide: BorderSide(color: Colors.red, width: 2.0),
+              borderRadius: BorderRadius.all(Radius.circular(20)),
+            ),
+            errorText: error,
+            fillColor: Colors.white.withOpacity(0.3),
             filled: true,
             hintText: hintText,
             hintStyle: TextStyle(color: Colors.grey[500])),

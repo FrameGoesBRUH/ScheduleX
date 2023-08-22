@@ -1,8 +1,11 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:schedulex/pages/auth/components/my_button.dart';
 import 'package:schedulex/pages/auth/components/my_textfield.dart';
 import 'package:schedulex/pages/auth/components/square_tile.dart';
+import 'package:schedulex/pages/home/home.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -18,51 +21,44 @@ class _RegisterPageState extends State<RegisterPage> {
   final passwordController = TextEditingController();
   final confirmPasswordController = TextEditingController();
 
+  bool _unmatchpass = false;
+
   // sign user in method
-  void signUserUp() async {
+  Future<void> signUserUp() async {
     // show loading circle
-    showDialog(
-      context: context,
-      builder: (context) {
-        return const Center(
-          child: CircularProgressIndicator(),
-        );
-      },
-    );
 
     // try sign in
     try {
       if (passwordController.text == confirmPasswordController.text) {
-        await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        await FirebaseAuth.instance
+            .createUserWithEmailAndPassword(
           email: emailController.text,
           password: passwordController.text,
-        );
+        )
+            .then((value) {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        });
       } else {
-        showError("Passwords don't match");
+        setState(() {
+          _unmatchpass = true;
+        });
       }
-
-      // pop the loading circle
-      Navigator.pop(context);
     } on FirebaseAuthException catch (e) {
-      // pop the loading circle
-      Navigator.pop(context);
-
       showError(e.code);
     }
   }
 
-  // wrong password message popup
   void showError(String message) {
     showDialog(
       context: context,
       builder: (context) {
         return AlertDialog(
-          backgroundColor: Colors.transparent,
-          elevation: 0,
+          backgroundColor: Colors.red,
           title: Center(
             child: Text(
               message,
-              style: TextStyle(color: Colors.white),
+              style: const TextStyle(color: Colors.white),
             ),
           ),
         );
@@ -70,10 +66,20 @@ class _RegisterPageState extends State<RegisterPage> {
     );
   }
 
+  showTextError(String message) {
+    if (message == "unmatchpass") {
+      if (_unmatchpass == true) {
+        return "Unmatch Password";
+      } else {
+        return null;
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey[300],
+      backgroundColor: Colors.white,
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -106,6 +112,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: emailController,
                   hintText: 'Email',
                   obscureText: false,
+                  error: null,
                 ),
 
                 const SizedBox(height: 10),
@@ -115,6 +122,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: passwordController,
                   hintText: 'Password',
                   obscureText: true,
+                  error: null,
                 ),
 
                 const SizedBox(height: 10),
@@ -122,6 +130,7 @@ class _RegisterPageState extends State<RegisterPage> {
                   controller: confirmPasswordController,
                   hintText: 'Confirm Password',
                   obscureText: true,
+                  error: showTextError("unmatchpass"),
                 ),
 
                 const SizedBox(height: 25),
