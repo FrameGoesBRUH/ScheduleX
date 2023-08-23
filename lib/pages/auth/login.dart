@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:schedulex/pages/auth/components/my_button.dart';
 import 'package:schedulex/pages/auth/components/my_textfield.dart';
 import 'package:schedulex/pages/auth/components/square_tile.dart';
-import 'package:schedulex/pages/home/home.dart';
+import 'package:schedulex/pages/home/user_choice.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -36,8 +36,8 @@ class _LoginPageState extends State<LoginPage> {
           _wrongemail = false;
           _wrongpassword = false;
         });
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => HomePage()));
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => const UserChoice()));
       });
       // pop the loading circle
     } on FirebaseAuthException catch (e) {
