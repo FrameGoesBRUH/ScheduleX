@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:schedulex/color.dart';
+import 'components/drawer.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({super.key});
@@ -18,6 +19,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.black),
         elevation: 0,
         backgroundColor: Colors.white,
         actions: [
@@ -37,6 +39,7 @@ class HomePage extends StatelessWidget {
           ),
         ],
       ),
+      drawer: const DrawerNav(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -65,7 +68,7 @@ class HomePage extends StatelessWidget {
             child: Column(
               children: [
                 Container(
-                    height: 200,
+                    height: 180,
                     width: 350,
                     decoration: BoxDecoration(
                       color: primaryColor,
@@ -83,29 +86,29 @@ class HomePage extends StatelessWidget {
                           children: [
                             Text("Schedule",
                                 style: GoogleFonts.poppins(
-                                  fontSize: 35,
+                                  fontSize: 30,
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
                                 )),
                             Text("12.00 - 13.10 pm.",
                                 style: GoogleFonts.poppins(
-                                  fontSize: 30,
+                                  fontSize: 27,
                                   color: Colors.white,
                                   fontWeight: FontWeight.w600,
                                 )),
                             const SizedBox(height: 18),
                             Text("Mr.Frame",
                                 style: GoogleFonts.poppins(
-                                  fontSize: 25,
+                                  fontSize: 20,
                                   color: Colors.white,
-                                  fontWeight: FontWeight.w400,
+                                  fontWeight: FontWeight.w600,
                                 )),
                           ],
                         ),
                       ),
                     )),
                 Container(
-                    height: 150,
+                    height: 130,
                     width: 350,
                     decoration: const BoxDecoration(
                       color: Colors.white,
@@ -115,7 +118,7 @@ class HomePage extends StatelessWidget {
                       ),
                     ),
                     child: Padding(
-                      padding: const EdgeInsets.only(top: 30, bottom: 15),
+                      padding: const EdgeInsets.only(top: 20),
                       child: Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30),
                         child: Column(
@@ -150,6 +153,83 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+          ),
+          const SizedBox(height: 15),
+          Center(
+            child: Container(
+                height: 290,
+                width: 350,
+                decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: const BorderRadius.all(Radius.circular(40))),
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 20),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 30),
+                    child: Row(
+                      children: [
+                        const Padding(
+                          padding:
+                              EdgeInsets.only(bottom: 30, top: 10, right: 20),
+                          child: VerticalDivider(
+                            color: Colors.white,
+                            thickness: 3,
+                          ),
+                        ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("Schedule",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("12.00 - 13.10 pm.",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            const SizedBox(height: 20),
+
+                            //schedlue 2
+
+                            Text("Schedule",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("12.00 - 13.10 pm.",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            const SizedBox(height: 20),
+
+                            //schedule 3
+
+                            Text("Schedule",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 24,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w500,
+                                )),
+                            Text("12.00 - 13.10 pm.",
+                                style: GoogleFonts.poppins(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                )),
+                            const SizedBox(height: 18),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                )),
           ),
         ],
       ),

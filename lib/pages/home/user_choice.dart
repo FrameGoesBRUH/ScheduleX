@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:schedulex/pages/home/components/square_tile.dart';
@@ -11,7 +12,14 @@ class UserChoice extends StatefulWidget {
 }
 
 class _UserChoiceState extends State<UserChoice> {
-  final user = FirebaseAuth.instance.currentUser!;
+  final docRef =
+      FirebaseFirestore.instance.collection("objects").doc("some-id");
+
+  Future addUserDetails(String actype) async {
+    await FirebaseFirestore.instance.collection("users").add({
+      'accounttype': actype,
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +46,15 @@ class _UserChoiceState extends State<UserChoice> {
             ),
           ),
           const SizedBox(height: 20),
-          const SquareTile(
-            imagePath: 'lib/images/employer.png',
-            text: "Controller",
+          GestureDetector(
+            onTap: () {
+              // Clear all showing snack bars
+              addUserDetails("Admin");
+            },
+            child: const SquareTile(
+              imagePath: 'lib/images/employer.png',
+              text: "Admin",
+            ),
           ),
           const SizedBox(height: 20),
           Text(
@@ -51,7 +65,12 @@ class _UserChoiceState extends State<UserChoice> {
             ),
           ),
           const SizedBox(height: 20),
-          const SquareTile(imagePath: 'lib/images/user.png', text: "User"),
+          GestureDetector(
+              onTap: () {
+                addUserDetails("Controller");
+              },
+              child: const SquareTile(
+                  imagePath: 'lib/images/user.png', text: "User")),
         ]),
       ),
     );

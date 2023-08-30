@@ -6,6 +6,7 @@ import 'package:schedulex/pages/auth/components/my_button.dart';
 import 'package:schedulex/pages/auth/components/my_textfield.dart';
 import 'package:schedulex/pages/auth/components/square_tile.dart';
 import 'package:schedulex/pages/home/home.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class RegisterPage extends StatefulWidget {
   final Function()? onTap;
@@ -23,17 +24,24 @@ class _RegisterPageState extends State<RegisterPage> {
 
   bool _unmatchpass = false;
 
+  Future addUserDetails(String actype) async {
+    await FirebaseFirestore.instance.collection("users").add({
+      'accounttype': actype,
+    });
+  }
+
   // sign user in method
   Future<void> signUserUp() async {
     // show loading circle
 
     // try sign in
     try {
-      if (passwordController.text == confirmPasswordController.text) {
+      if (passwordController.text.trim() ==
+          confirmPasswordController.text.trim()) {
         await FirebaseAuth.instance
             .createUserWithEmailAndPassword(
-          email: emailController.text,
-          password: passwordController.text,
+          email: emailController.text.trim(),
+          password: passwordController.text.trim(),
         )
             .then((value) {
           Navigator.push(

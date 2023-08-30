@@ -23,14 +23,7 @@ class SquareTile extends StatelessWidget {
         child: InkResponse(
           containedInkWell: true,
           highlightShape: BoxShape.rectangle,
-          onTap: () {
-            // Clear all showing snack bars
-            ScaffoldMessenger.of(context).clearSnackBars();
-            // Display a snack bar
-            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-              content: Text("Let's me sleep. Don't touch me!"),
-            ));
-          },
+
           // Add image & text
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -5,7 +5,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:schedulex/pages/auth/components/my_button.dart';
 import 'package:schedulex/pages/auth/components/my_textfield.dart';
 import 'package:schedulex/pages/auth/components/square_tile.dart';
+import 'package:schedulex/pages/home/home.dart';
 import 'package:schedulex/pages/home/user_choice.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class LoginPage extends StatefulWidget {
   final Function()? onTap;
@@ -28,16 +30,24 @@ class _LoginPageState extends State<LoginPage> {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-        email: emailController.text,
-        password: passwordController.text,
+        email: emailController.text.trim(),
+        password: passwordController.text.trim(),
       )
-          .then((value) {
+          .then((credential) async {
         setState(() {
           _wrongemail = false;
           _wrongpassword = false;
         });
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const UserChoice()));
+
+        //var result = await FirebaseAuth.instance
+        // .signInWithCredential(EmailAuthProvider as AuthCredential);
+        if (credential.additionalUserInfo!.isNewUser) {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const UserChoice()));
+        } else {
+          Navigator.push(
+              context, MaterialPageRoute(builder: (context) => HomePage()));
+        }
       });
       // pop the loading circle
     } on FirebaseAuthException catch (e) {
