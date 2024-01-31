@@ -40,6 +40,13 @@ dependencies:
   google_fonts: ^5.1.0
   cloud_firestore: ^4.9.0
   syncfusion_flutter_calendar: ^22.2.11
+  flutter_glow: ^0.3.0
+  dropdown_button2: ^2.3.9
+  intl: ^0.18.1
+  auto_size_text: ^3.0.0
+  flutter_material_color_picker: ^1.2.0
+  sizer: ^2.0.15
+  provider: ^6.1.1
   
 
 dev_dependencies:

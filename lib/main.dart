@@ -1,12 +1,18 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:schedulex/Theme/dark_Theme.dart';
+import 'package:schedulex/Theme/light_Theme.dart';
 import 'package:schedulex/pages/auth/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:schedulex/pages/auth/login_register.dart';
 import 'package:schedulex/pages/calendar/calendar.dart';
 import 'package:schedulex/pages/home/home.dart';
 import 'package:schedulex/pages/home/user_choice.dart';
+import 'package:schedulex/pages/schedules/eventedit.dart';
+import 'package:schedulex/pages/schedules/joinedlist.dart';
+import 'package:schedulex/provider/provider.dart';
 import 'firebase_options.dart';
 
 void main() async {
@@ -22,9 +28,13 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: CalendarPage(),
-    );
+    return ChangeNotifierProvider(
+        create: (context) => EventProvider(),
+        child: MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: lightMode,
+            darkTheme: darkMode,
+            themeMode: ThemeMode.dark,
+            home: const AuthPage()));
   }
 }

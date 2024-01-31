@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:schedulex/pages/calendar/calendar.dart';
 import 'package:schedulex/pages/home/home.dart';
+import 'package:schedulex/pages/schedules/joinedlist.dart';
+import 'package:schedulex/pages/schedules/sharedlist.dart';
 
 class DrawerNav extends StatelessWidget {
   const DrawerNav({super.key});
@@ -39,11 +41,21 @@ class DrawerNav extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('School'),
+            title: const Text('Joined Schedules'),
             onTap: () {
               // Update the state of the app
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => HomePage()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const JoinedList()));
+              // Then close the drawer/
+              //Navigator.pop(context);
+            },
+          ),
+          ListTile(
+            title: const Text('Shared Schedules'),
+            onTap: () {
+              // Update the state of the app
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const SharedList()));
               // Then close the drawer/
               //Navigator.pop(context);
             },

@@ -1,13 +1,16 @@
+//import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:schedulex/color.dart';
-import 'components/drawer.dart';
+//import 'package:schedulex/Theme/light_Theme.dart';
+import '../mainComponents/drawer.dart';
+import '../mainComponents/baseAppBar.dart';
 
 class HomePage extends StatelessWidget {
-  HomePage({super.key});
+  const HomePage({super.key});
 
-  final user = FirebaseAuth.instance.currentUser!;
+  //final user = FirebaseAuth.instance.currentUser!;
 
   // sign user out method
   void signUserOut() {
@@ -17,65 +20,25 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        elevation: 0,
-        backgroundColor: Colors.white,
-        actions: [
-          const IconButton(
-            onPressed: null,
-            icon: Icon(
-              Icons.person,
-              color: Colors.black,
-            ),
-          ),
-          IconButton(
-            onPressed: signUserOut,
-            icon: const Icon(
-              Icons.more_vert,
-              color: Colors.black,
-            ),
-          ),
-        ],
-      ),
+      backgroundColor: Theme.of(context).colorScheme.background,
+      appBar: const baseAppBar(),
       drawer: const DrawerNav(),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 25),
-            child: Text(
-              "Now",
-              style: GoogleFonts.poppins(
-                fontSize: 28,
-                fontWeight: FontWeight.w700,
-              ),
-            ),
-          ),
-          const SizedBox(height: 20),
           Center(
               child: Container(
-            decoration: const BoxDecoration(
-              boxShadow: [
-                BoxShadow(
-                  color: Color.fromARGB(50, 0, 0, 0),
-                  blurRadius: 25.0,
-                ),
-              ],
-            ),
+            width: (MediaQuery.of(context).size.width),
+            margin: const EdgeInsets.symmetric(horizontal: 30),
             child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 Container(
-                    height: 180,
-                    width: 350,
+                    //height:
                     decoration: BoxDecoration(
-                      color: primaryColor,
-                      borderRadius: const BorderRadius.only(
-                        topRight: Radius.circular(40),
-                        topLeft: Radius.circular(40),
-                      ),
+                      color: Theme.of(context).colorScheme.secondary,
+                      borderRadius: const BorderRadius.all(Radius.circular(40)),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.only(top: 30, bottom: 15),
@@ -85,57 +48,51 @@ class HomePage extends StatelessWidget {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text("Schedule",
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontSize: 30,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inversePrimary,
+                                  //fontWeight: FontWeight.w600,
                                 )),
+                            const SizedBox(height: 4),
                             Text("12.00 - 13.10 pm.",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 27,
-                                  color: Colors.white,
+                                style: GoogleFonts.lato(
+                                  fontSize: 20,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inversePrimary,
+                                  //fontWeight: FontWeight.w400,
+                                )),
+                            const SizedBox(height: 24),
+                            Text("Mr.Frame",
+                                style: GoogleFonts.lato(
+                                  fontSize: 15,
+                                  color: Theme.of(context).colorScheme.tertiary,
                                   fontWeight: FontWeight.w600,
                                 )),
                             const SizedBox(height: 18),
-                            Text("Mr.Frame",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                )),
-                          ],
-                        ),
-                      ),
-                    )),
-                Container(
-                    height: 130,
-                    width: 350,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(40),
-                        bottomRight: Radius.circular(40),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 20),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                            Divider(
+                              thickness: 1,
+                              color: Theme.of(context).colorScheme.tertiary,
+                            ),
+                            const SizedBox(height: 10),
                             Text("Note",
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context).colorScheme.tertiary,
+                                  fontWeight: FontWeight.w400,
                                 )),
+                            const SizedBox(height: 4),
                             Text("Example note for design purpose only",
-                                style: GoogleFonts.poppins(
+                                style: GoogleFonts.lato(
                                   fontSize: 15,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.w600,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inversePrimary,
+                                  fontWeight: FontWeight.w400,
                                 )),
+                            const SizedBox(height: 20),
                           ],
                         ),
                       ),
@@ -147,89 +104,13 @@ class HomePage extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 25),
             child: Text(
-              "Next",
-              style: GoogleFonts.poppins(
+              "Task",
+              style: GoogleFonts.lato(
+                color: Theme.of(context).colorScheme.inverseSurface,
                 fontSize: 25,
                 fontWeight: FontWeight.w700,
               ),
             ),
-          ),
-          const SizedBox(height: 15),
-          Center(
-            child: Container(
-                height: 290,
-                width: 350,
-                decoration: BoxDecoration(
-                    color: primaryColor,
-                    borderRadius: const BorderRadius.all(Radius.circular(40))),
-                child: Padding(
-                  padding: const EdgeInsets.only(top: 20),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30),
-                    child: Row(
-                      children: [
-                        const Padding(
-                          padding:
-                              EdgeInsets.only(bottom: 30, top: 10, right: 20),
-                          child: VerticalDivider(
-                            color: Colors.white,
-                            thickness: 3,
-                          ),
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("Schedule",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                )),
-                            Text("12.00 - 13.10 pm.",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                )),
-                            const SizedBox(height: 20),
-
-                            //schedlue 2
-
-                            Text("Schedule",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                )),
-                            Text("12.00 - 13.10 pm.",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                )),
-                            const SizedBox(height: 20),
-
-                            //schedule 3
-
-                            Text("Schedule",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 24,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500,
-                                )),
-                            Text("12.00 - 13.10 pm.",
-                                style: GoogleFonts.poppins(
-                                  fontSize: 20,
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                )),
-                            const SizedBox(height: 18),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                )),
           ),
         ],
       ),
