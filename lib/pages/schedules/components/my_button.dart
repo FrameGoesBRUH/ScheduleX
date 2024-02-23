@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:schedulex/size.dart';
 
 class MyButton extends StatelessWidget {
   final Function()? onTap;
@@ -10,10 +11,10 @@ class MyButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.all(25),
+        height: displayHeight(context) * 0.08,
         margin: const EdgeInsets.symmetric(horizontal: 25),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.primary,
+          color: Colors.transparent,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Center(

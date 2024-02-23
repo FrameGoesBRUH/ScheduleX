@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:schedulex/pages/calendar/calendar.dart';
 import 'package:schedulex/pages/home/home.dart';
 import 'package:schedulex/pages/schedules/joinedlist.dart';
 import 'package:schedulex/pages/schedules/sharedlist.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:schedulex/provider/provider.dart';
 
 class DrawerNav extends StatelessWidget {
   const DrawerNav({super.key});
+  Future<void> signUserOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -14,18 +20,35 @@ class DrawerNav extends StatelessWidget {
         // Important: Remove any padding from the ListView.
         padding: EdgeInsets.zero,
         children: [
-          const DrawerHeader(
-            decoration: BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: Text('Schedule X'),
-          ),
+          DrawerHeader(
+              decoration: const BoxDecoration(
+                color: Colors.transparent,
+              ),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      'Schedule X',
+                      style: TextStyle(fontSize: 25),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Text(FirebaseAuth.instance.currentUser!.email.toString()),
+                    Switch(
+                        value: Provider.of<EventProvider>(context).isDarkMode,
+                        onChanged: (value) {
+                          final provider = Provider.of<EventProvider>(context,
+                              listen: false);
+                          provider.toggleTheme(value);
+                        }),
+                  ])),
           ListTile(
             title: const Text('Home'),
             onTap: () {
               // Update the state of the app
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => HomePage()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const HomePage()));
               // Then close the drawer
               //Navigator.pop(context);
             },
@@ -35,7 +58,9 @@ class DrawerNav extends StatelessWidget {
             onTap: () {
               // Update the state of the app
               Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const CalendarPage()));
+                  builder: (context) => CalendarPage(
+                        date: DateTime.now(),
+                      )));
               // Then close the drawer
               //Navigator.pop(context);
             },
@@ -59,6 +84,19 @@ class DrawerNav extends StatelessWidget {
               // Then close the drawer/
               //Navigator.pop(context);
             },
+          ),
+          const SizedBox(
+            height: 50,
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: IconButton(
+              onPressed: signUserOut,
+              icon: Icon(
+                Icons.exit_to_app,
+                color: Theme.of(context).colorScheme.inverseSurface,
+              ),
+            ),
           ),
         ],
       ),

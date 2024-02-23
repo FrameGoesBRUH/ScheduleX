@@ -4,7 +4,12 @@ import 'package:flutter_glow/flutter_glow.dart';
 class MyschButton extends StatelessWidget {
   final Function()? onTap;
   final String text;
-  const MyschButton({super.key, required this.onTap, required this.text});
+  final String text2;
+  const MyschButton(
+      {super.key,
+      required this.onTap,
+      required this.text,
+      required this.text2});
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +21,27 @@ class MyschButton extends StatelessWidget {
         color: Theme.of(context).colorScheme.secondary,
         blurRadius: 20,
         borderRadius: BorderRadius.circular(15),
-        child: Center(
-          child: Text(
+        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Text(
             text,
             style: const TextStyle(
               color: Colors.white,
               fontWeight: FontWeight.bold,
-              fontSize: 16,
+              fontSize: 25,
             ),
           ),
-        ),
+          const SizedBox(
+            height: 10,
+          ),
+          Text(
+            text2,
+            style: const TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
+            ),
+          )
+        ]),
       ),
     );
   }

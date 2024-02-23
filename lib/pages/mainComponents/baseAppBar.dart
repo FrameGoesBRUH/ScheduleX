@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:schedulex/pages/calendar/calendar.dart';
-import 'package:schedulex/pages/home/home.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:schedulex/pages/schedules/inbox.dart';
 
 class baseAppBar extends StatelessWidget implements PreferredSizeWidget {
   const baseAppBar({super.key});
-
   void signUserOut() {
     FirebaseAuth.instance.signOut();
   }
@@ -16,19 +14,14 @@ class baseAppBar extends StatelessWidget implements PreferredSizeWidget {
         iconTheme:
             IconThemeData(color: Theme.of(context).colorScheme.inverseSurface),
         elevation: 0,
-        backgroundColor: Theme.of(context).colorScheme.background,
+        backgroundColor:
+            Theme.of(context).colorScheme.background.withOpacity(.5),
         actions: [
           IconButton(
-            onPressed: null,
+            onPressed: () => Navigator.of(context)
+                .push(MaterialPageRoute(builder: (context) => const Inbox())),
             icon: Icon(
-              Icons.person,
-              color: Theme.of(context).colorScheme.inverseSurface,
-            ),
-          ),
-          IconButton(
-            onPressed: signUserOut,
-            icon: Icon(
-              Icons.more_vert,
+              Icons.mail_rounded,
               color: Theme.of(context).colorScheme.inverseSurface,
             ),
           ),

@@ -9,6 +9,7 @@ ThemeData lightMode = ThemeData(
     tertiary: Colors.white,
     inversePrimary: Colors.white,
     inverseSurface: Colors.black,
+    surface: Color.fromARGB(255, 245, 147, 57),
   ),
 // ColorScheme.light
   textTheme: ThemeData.light().textTheme.apply(

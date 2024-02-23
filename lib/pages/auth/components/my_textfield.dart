@@ -25,7 +25,7 @@ class MyTextField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: TextField(
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 14,
             fontWeight: FontWeight.normal,
@@ -34,20 +34,20 @@ class MyTextField extends StatelessWidget {
           obscureText: obscureText,
           decoration: InputDecoration(
             enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
+                borderRadius: BorderRadius.all(Radius.circular(10)),
                 borderSide: BorderSide(width: 3, color: Colors.transparent)),
             errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             focusedBorder: const OutlineInputBorder(
               //<-- SEE HERE
               borderSide: BorderSide(width: 3, color: Colors.transparent),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             focusedErrorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             errorText: error,
             //labelText: TextStyle(Theme.of(context).textTheme.bodySmall),

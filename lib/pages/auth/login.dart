@@ -4,11 +4,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+//import 'package:schedulex/pages/auth/auth_service.dart';
 import 'package:schedulex/pages/auth/components/my_button.dart';
 import 'package:schedulex/pages/auth/components/my_textfield.dart';
 import 'package:schedulex/pages/auth/components/square_tile.dart';
+import 'package:schedulex/pages/auth/forgot_password.dart';
 import 'package:schedulex/pages/home/home.dart';
-import 'package:schedulex/pages/home/user_choice.dart';
+import 'package:schedulex/size.dart';
+import 'auth_page.dart';
+//import 'dart:developer' as d;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_glow/flutter_glow.dart';
 
@@ -24,8 +28,8 @@ class _LoginPageState extends State<LoginPage> {
   // text editing controllers
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  var errortext = null;
+  // authService authPage = new authService();
+  var errortext;
 
   // sign user in method
   Future<void> signUserIn() async {
@@ -37,12 +41,12 @@ class _LoginPageState extends State<LoginPage> {
         password: passwordController.text.trim(),
       )
           .then((credential) async {
-        setState(() {});
-        var docref = await FirebaseFirestore.instance
-            .collection('users')
-            .doc(emailController.text.trim())
-            .get();
-
+        //d.log(credential.toString());
+        //authPage.storeTokenAndData(credential);
+        // Obtain shared preferences
+        //d.log(email.toString());
+        Navigator.pushReplacement(
+            context, MaterialPageRoute(builder: (context) => const HomePage()));
         //debugPrint('ygg');
 
         /*if (docref.exists) {
@@ -91,31 +95,21 @@ class _LoginPageState extends State<LoginPage> {
     }
   }
 
-  // wrong password message popup
-  /*showError(String message) {
-    if (message == "checkemail") {
-      if (_wrongemail == true) {
-        return "Wrong Email";
-      } else {
-        return null;
-      }
-    } else if (message == "checkpass") {
-      if (_wrongpassword == true) {
-        return "Wrong Password";
-      } else {
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }*/
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.background,
       body: Center(
-        child: SingleChildScrollView(
+          child: SingleChildScrollView(
+              child: Container(
+        width: double.infinity,
+        alignment: Alignment.center,
+        child: Container(
+          constraints: BoxConstraints(
+              maxWidth: displayHeight(context) + displayWidth(context) * 0.1),
+          padding:
+              EdgeInsets.symmetric(horizontal: displayWidth(context) * 0.05),
+          alignment: Alignment.center,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -150,7 +144,7 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: false,
                 error: null,
                 isFilled: true,
-                padding: 25,
+                padding: 0,
                 //errorText: _wrongemail ? "Wrong Email" : null,
               ),
 
@@ -163,26 +157,31 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
                 error: errortext,
                 isFilled: true,
-                padding: 25,
+                padding: 0,
                 //errorText: _wrongpassword ? 'Wrong Password' : null,
               ),
 
               const SizedBox(height: 10),
 
               // forgot password?
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 25.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'Forgot Password?',
-                      style: Theme.of(context).textTheme.bodySmall,
-                    ),
-                  ],
+              GestureDetector(
+                onTap: () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const ForgotPassword()),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 25.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        'Forgot Password?',
+                        style: Theme.of(context).textTheme.bodySmall,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-
               const SizedBox(height: 25),
 
               // sign in button
@@ -194,6 +193,7 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 30),
 
               // or continue with
+              /*
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 25.0),
                 child: Row(
@@ -224,19 +224,38 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(height: 30),
 
               // google + apple sign in buttons
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  // google button
-                  SquareTile(imagePath: 'lib/images/google.png'),
-
-                  SizedBox(width: 25),
-
-                  // apple button
-                  SquareTile(imagePath: 'lib/images/apple.png')
-                ],
+              GestureDetector(
+                onTap: signInWithGoogle,
+                child: Container(
+                    // margin: EdgeInsets.all(10),
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    decoration: BoxDecoration(
+                      // border: Border.all(color: Colors.white),
+                      borderRadius: BorderRadius.circular(16),
+                      color: Theme.of(context)
+                          .colorScheme
+                          .inverseSurface
+                          .withOpacity(.2),
+                    ),
+                    height: 50,
+                    child: Row(
+                      children: [
+                        Image.asset(
+                          'lib/images/google.png',
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Text(
+                          "Continue with Google",
+                          style: TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 18),
+                        )
+                      ],
+                    )),
               ),
-
+*/
               const SizedBox(height: 30),
 
               // not a member? register now
@@ -268,7 +287,7 @@ class _LoginPageState extends State<LoginPage> {
             ],
           ),
         ),
-      ),
+      ))),
     );
   }
 }

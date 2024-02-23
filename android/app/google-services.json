@@ -14,7 +14,15 @@
       },
       "oauth_client": [
         {
-          "client_id": "89475562539-o9ikm49a9nsp94a1gf1o780fe3dsm47c.apps.googleusercontent.com",
+          "client_id": "89475562539-l3sfj99dcn9m4e0st6fe465tthhusprf.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.schedulex",
+            "certificate_hash": "11a1acab2258d4c5e01cf3cdbf25fddd6329c1bb"
+          }
+        },
+        {
+          "client_id": "89475562539-l8vgcp7tr1hnur0i07ve8vo3bei2t8cr.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
@@ -27,8 +35,15 @@
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "89475562539-o9ikm49a9nsp94a1gf1o780fe3dsm47c.apps.googleusercontent.com",
+              "client_id": "89475562539-l8vgcp7tr1hnur0i07ve8vo3bei2t8cr.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "89475562539-frk7k087ohb8orqchjlv74f009gk2hjo.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.schedulex"
+              }
             }
           ]
         }
