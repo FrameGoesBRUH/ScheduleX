@@ -9,7 +9,7 @@ class EventProvider with ChangeNotifier {
   final dark_Theme = darkMode;
 // ThemeData
   final light_Theme = lightMode;
-  ThemeMode themeMode = ThemeMode.dark;
+  ThemeMode themeMode = ThemeMode.light;
   bool get isDarkMode => themeMode == ThemeMode.dark;
 
   final List<Event> _events = [];

@@ -50,7 +50,7 @@ class InboxButton extends StatelessWidget {
                 onPressed: onTap2,
                 icon: Icon(
                   Icons.close,
-                  color: Theme.of(context).colorScheme.inverseSurface,
+                  color: Colors.white,
                 ),
               ),
               const SizedBox(
@@ -61,7 +61,7 @@ class InboxButton extends StatelessWidget {
                 child: const Text(
                   'Accept',
                   style: TextStyle(
-                    color: Colors.green,
+                    color: Colors.white,
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),

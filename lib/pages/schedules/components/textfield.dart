@@ -10,9 +10,11 @@ class MyTextField extends StatelessWidget {
   final dynamic error;
   final double padding;
   final bool isFilled;
+  final bool border;
 
   const MyTextField(
       {super.key,
+      required this.border,
       required this.controller,
       required this.hintText,
       required this.obscureText,
@@ -29,21 +31,29 @@ class MyTextField extends StatelessWidget {
           obscureText: obscureText,
           style: TextStyle(color: Theme.of(context).colorScheme.inverseSurface),
           decoration: InputDecoration(
-            enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(20)),
-                borderSide: BorderSide(width: 3, color: Colors.transparent)),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderSide: BorderSide(
+                    width: 1.5,
+                    color: border
+                        ? Theme.of(context)
+                            .colorScheme
+                            .inverseSurface
+                            .withOpacity(0.08)
+                        : Colors.transparent)),
             errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
-            focusedBorder: const OutlineInputBorder(
+            focusedBorder: OutlineInputBorder(
               //<-- SEE HERE
-              borderSide: BorderSide(width: 3, color: Colors.transparent),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderSide: BorderSide(
+                  width: 3, color: Theme.of(context).colorScheme.secondary),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             focusedErrorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red, width: 2.0),
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             errorText: error,
             //labelText: TextStyle(Theme.of(context).textTheme.bodySmall),
@@ -51,7 +61,8 @@ class MyTextField extends StatelessWidget {
             filled: isFilled,
             hintText: hintText,
             hintStyle: TextStyle(
-              color: Theme.of(context).colorScheme.inverseSurface.withAlpha(50),
+              color:
+                  Theme.of(context).colorScheme.inverseSurface.withAlpha(100),
               fontSize: 14,
               fontWeight: FontWeight.normal,
             ),

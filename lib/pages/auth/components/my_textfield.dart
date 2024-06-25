@@ -9,7 +9,7 @@ class MyTextField extends StatelessWidget {
   final bool obscureText;
   final dynamic error;
   final double padding;
-  final bool isFilled;
+  final bool? isFilled;
 
   const MyTextField(
       {super.key,
@@ -25,25 +25,39 @@ class MyTextField extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: padding),
       child: TextField(
-          style: const TextStyle(
-            color: Colors.white,
+          style: TextStyle(
+            color: Theme.of(context).colorScheme.inverseSurface,
             fontSize: 14,
             fontWeight: FontWeight.normal,
           ),
           controller: controller,
           obscureText: obscureText,
           decoration: InputDecoration(
-            enabledBorder: const OutlineInputBorder(
-                borderRadius: BorderRadius.all(Radius.circular(10)),
-                borderSide: BorderSide(width: 3, color: Colors.transparent)),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                borderSide: BorderSide(
+                    width: 1.5,
+                    color: isFilled == true || isFilled == null
+                        ? Colors.transparent
+                        : Theme.of(context)
+                            .colorScheme
+                            .inverseSurface
+                            .withOpacity(0.08))),
             errorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red, width: 2.0),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
-            focusedBorder: const OutlineInputBorder(
+            focusedBorder: OutlineInputBorder(
               //<-- SEE HERE
-              borderSide: BorderSide(width: 3, color: Colors.transparent),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
+              borderSide: BorderSide(
+                  width: 2,
+                  color: isFilled == true || isFilled == null
+                      ? Colors.transparent
+                      : Theme.of(context)
+                          .colorScheme
+                          .inverseSurface
+                          .withOpacity(0.08)),
+              borderRadius: const BorderRadius.all(Radius.circular(10)),
             ),
             focusedErrorBorder: const OutlineInputBorder(
               borderSide: BorderSide(color: Colors.red, width: 2.0),
@@ -55,7 +69,8 @@ class MyTextField extends StatelessWidget {
             filled: isFilled,
             hintText: hintText,
             hintStyle: TextStyle(
-              color: Theme.of(context).colorScheme.tertiary,
+              color:
+                  Theme.of(context).colorScheme.inverseSurface.withOpacity(0.4),
               fontSize: 14,
               fontWeight: FontWeight.normal,
             ),

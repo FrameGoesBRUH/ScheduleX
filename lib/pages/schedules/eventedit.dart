@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -99,6 +98,7 @@ class _EventEditState extends State<EventEdit> {
         "backgroundColor": backgroundColor.value,
         "isAllDay": isChecked,
         "recurrenceRule": reccurrule,
+        "personal": false,
       };
 
       //developer.log(reccurrule.toString());
@@ -175,7 +175,47 @@ class _EventEditState extends State<EventEdit> {
       inndate = TimeOfDay(hour: toDate.hour, minute: toDate.minute);
     }
     //int hours;
-    showTimePicker(context: context, initialTime: inndate).then((value) {
+    showTimePicker(
+        context: context,
+        initialTime: inndate,
+        builder: (context, child) => Theme(
+              data: ThemeData().copyWith(
+                  timePickerTheme: TimePickerThemeData(
+                    backgroundColor: Theme.of(context)
+                        .colorScheme
+                        .background, // Background color
+                    hourMinuteTextColor: Theme.of(context)
+                        .colorScheme
+                        .inverseSurface, // Text color for hours and minutes
+                    dayPeriodTextColor: Theme.of(context)
+                        .colorScheme
+                        .inverseSurface, // Text color for AM/PM
+                    //dayPeriodBorderSide: BorderSide(color: Theme.of(context).colorScheme.surface), // Border color for AM/PM
+                    dialHandColor: Theme.of(context)
+                        .colorScheme
+                        .primary, // Color of the hour hand
+                    dialTextColor: Theme.of(context)
+                        .colorScheme
+                        .inverseSurface, // Text color on the clock dial
+                    dialBackgroundColor: Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.1),
+                    //dayPeriodColor: lightBlue,
+                    //hourMinuteColor: lightBlue,
+                    //entryModeIconColor: blueStanOut,
+                    //helpTextStyle: const TextStyle(
+                    //  color: blueStanOut, // Set the text color for "Enter time"
+                    //),
+                    //cancelButtonStyle: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.brown.shade300), foregroundColor:MaterialStateProperty.all<Color>(darkGreen)),
+                    //confirmButtonStyle: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.brown.shade300), foregroundColor:MaterialStateProperty.all<Color>(darkGreen)),
+                    //hourMinuteTextStyle: TextStyle(fontSize: 30), // Text style for hours and minutes
+                  ),
+                  colorScheme: ColorScheme.dark(
+                      surface: Theme.of(context).colorScheme.surface,
+                      primary: Theme.of(context).colorScheme.primary)),
+              child: child!,
+            )).then((value) {
       setState(() {
         if (dateType == 0) {
           var valuedate = DateTime(fromDate.year, fromDate.month, fromDate.day,
@@ -302,13 +342,13 @@ class _EventEditState extends State<EventEdit> {
                             hintText: 'Name',
                             obscureText: false,
                             error: nameerror,
-                            isFilled: true,
-                            padding: 0,
+                            isFilled: false,
+                            padding: 0, border: true,
 
                             //errorText: _wrongemail ? "Wrong Email" : null,
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -320,13 +360,14 @@ class _EventEditState extends State<EventEdit> {
                                           fontWeight: FontWeight.w500,
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .inversePrimary)),
+                                              .inverseSurface)),
                                   Checkbox(
                                     tristate: true,
                                     value: isChecked,
                                     side: BorderSide(
-                                      color:
-                                          Theme.of(context).colorScheme.primary,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .secondary,
                                       width: 1.5,
                                     ),
                                     checkColor: Theme.of(context)
@@ -355,54 +396,94 @@ class _EventEditState extends State<EventEdit> {
                                     },
                                   ),
                                 ]),
-                                GestureDetector(
-                                  onTap: () => pickColor(context),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: backgroundColor),
-                                    //color: backgroundColor,
-                                    width: 20,
-                                    height: 20,
+                                Row(children: [
+                                  Text("Color",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface)),
+                                  const SizedBox(
+                                    width: 10,
                                   ),
-                                ),
+                                  GestureDetector(
+                                      onTap: () => pickColor(context),
+                                      child: Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                          border: Border.all(
+                                              width: 2,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .inverseSurface
+                                                  .withOpacity(0.2)),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Flexible(
+                                          child: FractionallySizedBox(
+                                            heightFactor:
+                                                0.9, // Adjust those two for the white space
+                                            widthFactor: 0.9,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: backgroundColor,
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )),
+                                ]),
                               ]),
                           const SizedBox(
-                            height: 30,
+                            height: 10,
                           ),
-
-                          Text("From",
+                          Row(children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.5,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ]),
+                          const SizedBox(
+                            height: 20,
+                          ),
+                          Text("Start from",
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .inversePrimary)),
+                                      .inverseSurface)),
 
                           //width: 30.w,
                           const SizedBox(
-                            height: 20,
+                            height: 5,
                           ),
                           Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Expanded(
                                   child: Container(
                                     decoration: BoxDecoration(
-                                      // color: Colors.transparent,
-
                                       border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .inverseSurface
-                                            .withOpacity(0.2),
-                                        width: 2.0,
-                                      ),
+                                          width: 1.5,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface
+                                              .withOpacity(0.08)),
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
                                     child: TextButton(
                                         // <-- OutlinedButton
+
                                         style: ButtonStyle(
                                           shape: MaterialStatePropertyAll(
                                               RoundedRectangleBorder(
@@ -417,16 +498,22 @@ class _EventEditState extends State<EventEdit> {
                                           fit: BoxFit.contain,
                                           child: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceEvenly,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 const Icon(
-                                                  Icons.arrow_drop_down,
-                                                  size: 24.0,
+                                                  Icons.calendar_today,
+                                                  size: 20.0,
+                                                ),
+                                                SizedBox(
+                                                  width: displayWidth(context) *
+                                                      0.03,
                                                 ),
                                                 AutoSizeText(
                                                   DateFormat.MMMEd()
                                                       .format(fromDate),
                                                   maxLines: 1,
+                                                  //minFontSize: 15,
                                                 ),
                                               ]),
                                         )),
@@ -440,15 +527,14 @@ class _EventEditState extends State<EventEdit> {
                                     width: displayWidth(context) * 0.35,
                                     decoration: BoxDecoration(
                                       // color: Colors.transparent,
+                                      border: Border.all(
+                                          width: 1.5,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface
+                                              .withOpacity(0.08)),
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .inverseSurface
-                                            .withOpacity(0.2),
-                                        width: 2.0,
-                                      ),
                                     ),
                                     child: TextButton(
 
@@ -473,8 +559,13 @@ class _EventEditState extends State<EventEdit> {
                                                         .spaceEvenly,
                                                 children: [
                                                   const Icon(
-                                                    Icons.arrow_drop_down,
+                                                    Icons.timer_outlined,
                                                     size: 24.0,
+                                                  ),
+                                                  SizedBox(
+                                                    width:
+                                                        displayWidth(context) *
+                                                            0.05,
                                                   ),
                                                   AutoSizeText(
                                                     TimeOfDay(
@@ -499,15 +590,15 @@ class _EventEditState extends State<EventEdit> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Text("To",
+                          Text("Ends in",
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .inversePrimary)),
+                                      .inverseSurface)),
                           const SizedBox(
-                            height: 20,
+                            height: 5,
                           ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -516,14 +607,13 @@ class _EventEditState extends State<EventEdit> {
                                   child: Container(
                                     decoration: BoxDecoration(
                                       // color: Colors.transparent,
-
                                       border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .inverseSurface
-                                            .withOpacity(0.2),
-                                        width: 2.0,
-                                      ),
+                                          width: 1.5,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface
+                                              .withOpacity(0.08)),
+
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
@@ -546,8 +636,12 @@ class _EventEditState extends State<EventEdit> {
                                                   MainAxisAlignment.spaceEvenly,
                                               children: [
                                                 const Icon(
-                                                  Icons.arrow_drop_down,
-                                                  size: 24.0,
+                                                  Icons.calendar_today,
+                                                  size: 20.0,
+                                                ),
+                                                SizedBox(
+                                                  width: displayWidth(context) *
+                                                      0.03,
                                                 ),
                                                 AutoSizeText(
                                                   DateFormat.MMMEd()
@@ -566,15 +660,14 @@ class _EventEditState extends State<EventEdit> {
                                     width: displayWidth(context) * 0.35,
                                     decoration: BoxDecoration(
                                       // color: Colors.transparent,
+                                      border: Border.all(
+                                          width: 1.5,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface
+                                              .withOpacity(0.08)),
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
-                                      border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .inverseSurface
-                                            .withOpacity(0.2),
-                                        width: 2.0,
-                                      ),
                                     ),
                                     child: TextButton(
 
@@ -599,8 +692,13 @@ class _EventEditState extends State<EventEdit> {
                                                         .spaceEvenly,
                                                 children: [
                                                   const Icon(
-                                                    Icons.arrow_drop_down,
+                                                    Icons.timer_outlined,
                                                     size: 24.0,
+                                                  ),
+                                                  SizedBox(
+                                                    width:
+                                                        displayWidth(context) *
+                                                            0.05,
                                                   ),
                                                   AutoSizeText(
                                                     TimeOfDay(
@@ -616,7 +714,18 @@ class _EventEditState extends State<EventEdit> {
                                 ),
                               ]),
                           const SizedBox(
-                            height: 40,
+                            height: 30,
+                          ),
+                          Row(children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.5,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ]),
+                          const SizedBox(
+                            height: 20,
                           ),
                           Text("Repeat",
                               style: TextStyle(
@@ -624,10 +733,8 @@ class _EventEditState extends State<EventEdit> {
                                   fontWeight: FontWeight.w500,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .inversePrimary)),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                                      .inverseSurface)),
+
                           Align(
                             alignment: Alignment.center,
                             child: FittedBox(
@@ -653,6 +760,11 @@ class _EventEditState extends State<EventEdit> {
                                           }
                                         });
                                       },
+                                      borderWidth: 1.5,
+                                      borderColor: Theme.of(context)
+                                          .colorScheme
+                                          .inverseSurface
+                                          .withOpacity(0.08),
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(8)),
                                       selectedBorderColor:
@@ -693,20 +805,20 @@ class _EventEditState extends State<EventEdit> {
                             ),
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 0,
                           ),
 
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  "Until",
+                                  "Repeat Until",
                                   style: TextStyle(
                                       fontSize: 14,
                                       fontWeight: FontWeight.w500,
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .inversePrimary
+                                          .inverseSurface
                                           .withOpacity(0.9)),
                                 ),
                                 const SizedBox(
@@ -748,28 +860,37 @@ class _EventEditState extends State<EventEdit> {
                                 ),
                               ]),
                           const SizedBox(
-                            height: 40,
+                            height: 30,
                           ),
-
+                          Row(children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.5,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ]),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Text("Note",
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .inversePrimary)),
+                                      .inverseSurface)),
                           const SizedBox(
                             height: 10,
                           ),
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
-                                width: 2,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .inverseSurface
-                                    .withOpacity(.2),
-                              ),
+                                  width: 1.5,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inverseSurface
+                                      .withOpacity(0.08)),
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(15)),
                             ),
@@ -790,7 +911,10 @@ class _EventEditState extends State<EventEdit> {
 
                                       //errorText: error,
                                       //labelText: TextStyle(Theme.of(context).textTheme.bodySmall),
-                                      fillColor: Colors.transparent,
+                                      fillColor: Theme.of(context)
+                                          .colorScheme
+                                          .inverseSurface
+                                          .withOpacity(0.03),
 
                                       hintText: "Add Notes",
                                       hintStyle: TextStyle(

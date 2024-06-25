@@ -32,20 +32,20 @@ class TextFieldEdit extends StatelessWidget {
         style: TextStyle(color: Theme.of(context).colorScheme.inverseSurface),
         decoration: InputDecoration(
           enabledBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
+              borderRadius: BorderRadius.all(Radius.circular(10)),
               borderSide: BorderSide(width: 3, color: Colors.transparent)),
           errorBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red, width: 2.0),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           focusedBorder: const OutlineInputBorder(
             //<-- SEE HERE
             borderSide: BorderSide(width: 3, color: Colors.transparent),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           focusedErrorBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red, width: 2.0),
-            borderRadius: BorderRadius.all(Radius.circular(20)),
+            borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           errorText: error,
           //labelText: TextStyle(Theme.of(context).textTheme.bodySmall),

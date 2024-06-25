@@ -78,28 +78,40 @@ class _joinState extends State<join> {
               ])
             ]),
         body: Padding(
-            padding: const EdgeInsets.all(25),
+            padding: const EdgeInsets.all(10),
             child: SingleChildScrollView(
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                  const Row(children: [
-                    Text("Schedule ID"),
-                    SizedBox(
-                      width: 20,
+                  Text(
+                    "Schedule ID",
+                    style: TextStyle(
+                      color: Theme.of(context).colorScheme.inverseSurface,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 19,
                     ),
-                    Text("Get your Schedule ID from the Admin"),
-                  ]),
+                  ),
+                  Text(
+                    "Get your Schedule ID from the Admin",
+                    style: TextStyle(
+                      color: Theme.of(context)
+                          .colorScheme
+                          .inverseSurface
+                          .withOpacity(0.8),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 12,
+                    ),
+                  ),
                   const SizedBox(
-                    height: 10,
+                    height: 20,
                   ),
                   MyTextField(
                     controller: idController,
                     hintText: 'Schedule id',
                     obscureText: false,
                     error: errorstr,
-                    isFilled: true,
-                    padding: 0,
+                    isFilled: false,
+                    padding: 0, border: true,
 
                     //errorText: _wrongemail ? "Wrong Email" : null,
                   ),

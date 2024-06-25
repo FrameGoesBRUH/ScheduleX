@@ -15,7 +15,7 @@ class Memberedit extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       //padding: const EdgeInsets.all(25),
-      margin: const EdgeInsets.symmetric(horizontal: 5),
+      margin: const EdgeInsets.symmetric(horizontal: 12),
       //color: Colors.transparent,
       decoration: BoxDecoration(
         color: Colors.transparent,
@@ -23,13 +23,16 @@ class Memberedit extends StatelessWidget {
           bottom: BorderSide(
             color:
                 Theme.of(context).colorScheme.inverseSurface.withOpacity(0.2),
-            width: 2.0,
+            width: .4,
           ),
         ),
       ),
       child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-          const Icon(Icons.people),
+          const Icon(
+            Icons.people,
+            size: 17,
+          ),
           const SizedBox(
             width: 10,
           ),
@@ -38,13 +41,16 @@ class Memberedit extends StatelessWidget {
             style: TextStyle(
               color: Theme.of(context).colorScheme.inverseSurface,
               fontWeight: FontWeight.normal,
-              fontSize: 16,
+              fontSize: 14,
             ),
           ),
         ]),
         IconButton(
           onPressed: onTap,
-          icon: const Icon(Icons.cancel_rounded),
+          icon: const Icon(
+            Icons.cancel_rounded,
+            size: 18,
+          ),
         )
       ]),
     );

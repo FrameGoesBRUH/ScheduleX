@@ -122,13 +122,15 @@ class _LoginPageState extends State<LoginPage> {
                 color: Theme.of(context).colorScheme.primary,
                 size: 100,
                 blurRadius: 40,
+                glowColor:
+                    Theme.of(context).colorScheme.primary.withOpacity(0.5),
               ),
 
               const SizedBox(height: 50),
 
               // welcome back, you've been missed!
               const Text(
-                'Welcome back you\'ve been missed!',
+                'Welcome back, you\'ve been missed!',
                 style: TextStyle(
                   //color: Theme.of(context).textTheme.displayLarge,
                   fontSize: 16,
@@ -143,7 +145,7 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: 'Email',
                 obscureText: false,
                 error: null,
-                isFilled: true,
+                isFilled: false,
                 padding: 0,
                 //errorText: _wrongemail ? "Wrong Email" : null,
               ),
@@ -156,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                 hintText: 'Password',
                 obscureText: true,
                 error: errortext,
-                isFilled: true,
+                isFilled: false,
                 padding: 0,
                 //errorText: _wrongpassword ? 'Wrong Password' : null,
               ),
@@ -167,7 +169,8 @@ class _LoginPageState extends State<LoginPage> {
               GestureDetector(
                 onTap: () => Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => const ForgotPassword()),
+                  MaterialPageRoute(
+                      builder: (context) => const ForgotPassword()),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 25.0),

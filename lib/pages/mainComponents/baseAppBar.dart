@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:schedulex/pages/schedules/inbox.dart';
@@ -18,10 +20,14 @@ class baseAppBar extends StatelessWidget implements PreferredSizeWidget {
             Theme.of(context).colorScheme.background.withOpacity(.5),
         actions: [
           IconButton(
-            onPressed: () => Navigator.of(context)
-                .push(MaterialPageRoute(builder: (context) => const Inbox())),
+            onPressed: () {
+              // Update the state of the app
+              Navigator.of(context)
+                  .push(MaterialPageRoute(builder: (context) => const Inbox()));
+              // Then close the drawer/
+            },
             icon: Icon(
-              Icons.mail_rounded,
+              Icons.mail,
               color: Theme.of(context).colorScheme.inverseSurface,
             ),
           ),

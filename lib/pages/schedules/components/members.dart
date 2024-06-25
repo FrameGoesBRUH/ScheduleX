@@ -12,20 +12,23 @@ class MemberButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      //padding: const EdgeInsets.all(25),
-      margin: const EdgeInsets.symmetric(horizontal: 5),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.transparent,
-        border: Border(
-          bottom: BorderSide(
-            color:
-                Theme.of(context).colorScheme.inverseSurface.withOpacity(0.2),
-            width: 2.0,
-          ),
+        color: Theme.of(context).colorScheme.inverseSurface.withOpacity(.07),
+        border: Border.all(
+          color: Colors.transparent,
+          width: 0.4, //                   <--- border width here
         ),
+        borderRadius: const BorderRadius.all(Radius.circular(50.0)),
       ),
       child: Row(mainAxisAlignment: MainAxisAlignment.start, children: [
-        const Icon(Icons.people),
+        const SizedBox(
+          width: 10,
+        ),
+        const Icon(
+          Icons.people,
+          size: 20,
+        ),
         const SizedBox(
           width: 10,
         ),

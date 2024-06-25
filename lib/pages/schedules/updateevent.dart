@@ -201,7 +201,47 @@ class _UpdateEventState extends State<UpdateEvent> {
       inndate = TimeOfDay(hour: toDate.hour, minute: toDate.minute);
     }
     //int hours;
-    showTimePicker(context: context, initialTime: inndate).then((value) {
+    showTimePicker(
+        context: context,
+        initialTime: inndate,
+        builder: (context, child) => Theme(
+              data: ThemeData().copyWith(
+                  timePickerTheme: TimePickerThemeData(
+                    backgroundColor: Theme.of(context)
+                        .colorScheme
+                        .background, // Background color
+                    hourMinuteTextColor: Theme.of(context)
+                        .colorScheme
+                        .inverseSurface, // Text color for hours and minutes
+                    dayPeriodTextColor: Theme.of(context)
+                        .colorScheme
+                        .inverseSurface, // Text color for AM/PM
+                    //dayPeriodBorderSide: BorderSide(color: Theme.of(context).colorScheme.surface), // Border color for AM/PM
+                    dialHandColor: Theme.of(context)
+                        .colorScheme
+                        .primary, // Color of the hour hand
+                    dialTextColor: Theme.of(context)
+                        .colorScheme
+                        .inverseSurface, // Text color on the clock dial
+                    dialBackgroundColor: Theme.of(context)
+                        .colorScheme
+                        .secondary
+                        .withOpacity(0.1),
+                    //dayPeriodColor: lightBlue,
+                    //hourMinuteColor: lightBlue,
+                    //entryModeIconColor: blueStanOut,
+                    //helpTextStyle: const TextStyle(
+                    //  color: blueStanOut, // Set the text color for "Enter time"
+                    //),
+                    //cancelButtonStyle: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.brown.shade300), foregroundColor:MaterialStateProperty.all<Color>(darkGreen)),
+                    //confirmButtonStyle: ButtonStyle(backgroundColor: MaterialStateProperty.all<Color>(Colors.brown.shade300), foregroundColor:MaterialStateProperty.all<Color>(darkGreen)),
+                    //hourMinuteTextStyle: TextStyle(fontSize: 30), // Text style for hours and minutes
+                  ),
+                  colorScheme: ColorScheme.dark(
+                      surface: Theme.of(context).colorScheme.surface,
+                      primary: Theme.of(context).colorScheme.primary)),
+              child: child!,
+            )).then((value) {
       setState(() {
         if (dateType == 0) {
           var valuedate = DateTime(fromDate.year, fromDate.month, fromDate.day,
@@ -364,13 +404,13 @@ class _UpdateEventState extends State<UpdateEvent> {
                             hintText: 'Name',
                             obscureText: false,
                             error: nameerror,
-                            isFilled: true,
-                            padding: 0,
+                            isFilled: false,
+                            padding: 0, border: true,
 
                             //errorText: _wrongemail ? "Wrong Email" : null,
                           ),
                           const SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -382,7 +422,7 @@ class _UpdateEventState extends State<UpdateEvent> {
                                           fontWeight: FontWeight.w500,
                                           color: Theme.of(context)
                                               .colorScheme
-                                              .inversePrimary)),
+                                              .inverseSurface)),
                                   Checkbox(
                                     tristate: true,
                                     value: isChecked,
@@ -417,33 +457,75 @@ class _UpdateEventState extends State<UpdateEvent> {
                                     },
                                   ),
                                 ]),
-                                GestureDetector(
-                                  onTap: () => pickColor(context),
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: backgroundColor),
-                                    //color: backgroundColor,
-                                    width: 20,
-                                    height: 20,
+                                Row(children: [
+                                  Text("Color",
+                                      style: TextStyle(
+                                          fontSize: 15,
+                                          fontWeight: FontWeight.w500,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface)),
+                                  const SizedBox(
+                                    width: 10,
                                   ),
-                                ),
+                                  GestureDetector(
+                                      onTap: () => pickColor(context),
+                                      child: Container(
+                                        width: 30,
+                                        height: 30,
+                                        decoration: BoxDecoration(
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .background,
+                                          border: Border.all(
+                                              width: 2,
+                                              color: Theme.of(context)
+                                                  .colorScheme
+                                                  .inverseSurface
+                                                  .withOpacity(0.2)),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Flexible(
+                                          child: FractionallySizedBox(
+                                            heightFactor:
+                                                0.9, // Adjust those two for the white space
+                                            widthFactor: 0.9,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: backgroundColor,
+                                                shape: BoxShape.circle,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      )),
+                                ]),
                               ]),
                           const SizedBox(
-                            height: 30,
+                            height: 10,
                           ),
-
+                          Row(children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.5,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ]),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Text("From",
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .inversePrimary)),
+                                      .inverseSurface)),
 
                           //width: 30.w,
                           const SizedBox(
-                            height: 20,
+                            height: 10,
                           ),
                           Row(
                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -454,12 +536,11 @@ class _UpdateEventState extends State<UpdateEvent> {
                                       // color: Colors.transparent,
 
                                       border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .inverseSurface
-                                            .withOpacity(0.2),
-                                        width: 2.0,
-                                      ),
+                                          width: 1.5,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface
+                                              .withOpacity(0.08)),
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
@@ -505,11 +586,11 @@ class _UpdateEventState extends State<UpdateEvent> {
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
                                       border: Border.all(
+                                        width: 1.5,
                                         color: Theme.of(context)
                                             .colorScheme
                                             .inverseSurface
-                                            .withOpacity(0.2),
-                                        width: 2.0,
+                                            .withOpacity(0.08),
                                       ),
                                     ),
                                     child: TextButton(
@@ -552,7 +633,7 @@ class _UpdateEventState extends State<UpdateEvent> {
                                 ),
                               ]),
                           const SizedBox(
-                            height: 30,
+                            height: 20,
                           ),
                           const Align(
                             alignment: Alignment.center,
@@ -567,7 +648,7 @@ class _UpdateEventState extends State<UpdateEvent> {
                                   fontWeight: FontWeight.w500,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .inversePrimary)),
+                                      .inverseSurface)),
                           const SizedBox(
                             height: 20,
                           ),
@@ -580,12 +661,11 @@ class _UpdateEventState extends State<UpdateEvent> {
                                       // color: Colors.transparent,
 
                                       border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .inverseSurface
-                                            .withOpacity(0.2),
-                                        width: 2.0,
-                                      ),
+                                          width: 1.5,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface
+                                              .withOpacity(0.08)),
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
                                     ),
@@ -631,12 +711,11 @@ class _UpdateEventState extends State<UpdateEvent> {
                                       borderRadius: const BorderRadius.all(
                                           Radius.circular(10)),
                                       border: Border.all(
-                                        color: Theme.of(context)
-                                            .colorScheme
-                                            .inverseSurface
-                                            .withOpacity(0.2),
-                                        width: 2.0,
-                                      ),
+                                          width: 1.5,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface
+                                              .withOpacity(0.08)),
                                     ),
                                     child: TextButton(
 
@@ -678,7 +757,18 @@ class _UpdateEventState extends State<UpdateEvent> {
                                 ),
                               ]),
                           const SizedBox(
-                            height: 40,
+                            height: 30,
+                          ),
+                          Row(children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.5,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ]),
+                          const SizedBox(
+                            height: 20,
                           ),
                           Text("Repeat",
                               style: TextStyle(
@@ -686,10 +776,8 @@ class _UpdateEventState extends State<UpdateEvent> {
                                   fontWeight: FontWeight.w500,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .inversePrimary)),
-                          const SizedBox(
-                            height: 20,
-                          ),
+                                      .inverseSurface)),
+
                           Align(
                             alignment: Alignment.center,
                             child: FittedBox(
@@ -754,9 +842,6 @@ class _UpdateEventState extends State<UpdateEvent> {
                                   ]),
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
-                          ),
 
                           Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -768,7 +853,7 @@ class _UpdateEventState extends State<UpdateEvent> {
                                       fontWeight: FontWeight.w500,
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .inversePrimary
+                                          .inverseSurface
                                           .withOpacity(0.9)),
                                 ),
                                 const SizedBox(
@@ -810,28 +895,38 @@ class _UpdateEventState extends State<UpdateEvent> {
                                 ),
                               ]),
                           const SizedBox(
-                            height: 40,
+                            height: 30,
                           ),
-
+                          Row(children: [
+                            Expanded(
+                              child: Divider(
+                                thickness: 0.5,
+                                color: Colors.grey[400],
+                              ),
+                            ),
+                          ]),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           Text("Note",
                               style: TextStyle(
                                   fontSize: 15,
                                   fontWeight: FontWeight.w500,
                                   color: Theme.of(context)
                                       .colorScheme
-                                      .inversePrimary)),
+                                      .inverseSurface)),
+
                           const SizedBox(
                             height: 10,
                           ),
                           Container(
                             decoration: BoxDecoration(
                               border: Border.all(
-                                width: 2,
-                                color: Theme.of(context)
-                                    .colorScheme
-                                    .inverseSurface
-                                    .withOpacity(.2),
-                              ),
+                                  width: 1.5,
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .inverseSurface
+                                      .withOpacity(0.08)),
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(15)),
                             ),

@@ -148,7 +148,10 @@ class _inviteState extends State<invite> {
                     height: 40,
                   ),
                   Row(children: [
-                    Text("Invite ${widget.type.toString()}"),
+                    Text(
+                      "Invite ${widget.type.toString()}",
+                      style: const TextStyle(fontSize: 16),
+                    ),
                     //Text("Get your Schedule ID from the Admin"),
                   ]),
                   const SizedBox(
@@ -236,29 +239,35 @@ class _inviteState extends State<invite> {
                                 controller: tec,
                                 focusNode: fn,
                                 decoration: InputDecoration(
-                                  enabledBorder: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(8)),
                                       borderSide: BorderSide(
-                                          width: 3, color: Colors.transparent)),
+                                          width: 0.4,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface)),
                                   errorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.transparent, width: 2.0),
+                                        color: Colors.red, width: 2.0),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
+                                        BorderRadius.all(Radius.circular(8)),
                                   ),
-                                  focusedBorder: const OutlineInputBorder(
+                                  focusedBorder: OutlineInputBorder(
                                     //<-- SEE HERE
                                     borderSide: BorderSide(
-                                        width: 3, color: Colors.transparent),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
+                                        width: 2,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .primary),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(8)),
                                   ),
                                   focusedErrorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.transparent, width: 2.0),
+                                        color: Colors.red, width: 2.0),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
+                                        BorderRadius.all(Radius.circular(8)),
                                   ),
                                   fillColor: Theme.of(context)
                                       .colorScheme
@@ -338,7 +347,7 @@ class _inviteState extends State<invite> {
                     },
                   ),
                   const SizedBox(
-                    height: 20,
+                    height: 30,
                   ),
                   Container(
                       child: member
@@ -360,9 +369,10 @@ class _inviteState extends State<invite> {
                                       // color: Colors.transparent,
                                       color: Theme.of(context)
                                           .colorScheme
-                                          .primary
-                                          .withOpacity(.8),
-                                      border: Border.all(),
+                                          .inverseSurface
+                                          .withOpacity(.07),
+                                      border:
+                                          Border.all(color: Colors.transparent),
                                       borderRadius: BorderRadius.circular(8),
                                     ),
                                     child: GestureDetector(
@@ -374,7 +384,7 @@ class _inviteState extends State<invite> {
                                         children: [
                                           Text(widget.docid,
                                               style: TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 15,
                                                   color: Theme.of(context)
                                                       .colorScheme
                                                       .inverseSurface)),

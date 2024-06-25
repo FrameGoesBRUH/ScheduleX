@@ -62,11 +62,11 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 'Enter your email and we will send Password reset link through this email',
                 style: TextStyle(
                   //color: Theme.of(context).textTheme.displayLarge,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
 
-              const SizedBox(height: 25),
+              const SizedBox(height: 10),
 
               // email textfield
               MyTextField(
@@ -74,7 +74,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
                 hintText: 'Email',
                 obscureText: false,
                 error: error,
-                isFilled: true,
+                isFilled: false,
                 padding: 0,
                 //errorText: _wrongemail ? "Wrong Email" : null,
               ),

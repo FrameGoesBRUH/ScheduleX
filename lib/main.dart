@@ -1,6 +1,7 @@
 // ignore_for_file: unused_import
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:schedulex/Theme/dark_Theme.dart';
 import 'package:schedulex/Theme/light_Theme.dart';
@@ -15,6 +16,7 @@ import 'package:schedulex/pages/schedules/eventedit.dart';
 import 'package:schedulex/pages/schedules/joinedlist.dart';
 import 'package:schedulex/provider/provider.dart';
 import 'firebase_options.dart';
+import 'package:google_generative_ai/google_generative_ai.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,6 +25,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(ChangeNotifierProvider(
       create: (context) => EventProvider(), child: const MyApp()));
 }
@@ -33,10 +36,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<EventProvider>(context);
+
     return MaterialApp(
         debugShowCheckedModeBanner: false,
-        theme: lightMode,
+        theme: lightMode.copyWith(
+            textTheme:
+                GoogleFonts.robotoTextTheme(Theme.of(context).textTheme)),
         darkTheme: darkMode,
+        themeAnimationDuration: const Duration(milliseconds: 0),
         themeMode: themeProvider.themeMode,
         home: const AuthPage());
   }

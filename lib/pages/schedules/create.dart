@@ -81,7 +81,8 @@ class _createState extends State<create> {
           "caninvite": false,
           "canpermission": false,
           "candelete": false,
-        }
+        },
+        "personal": false,
       });
       var userdoc = FirebaseFirestore.instance
           .collection("users")
@@ -166,8 +167,8 @@ class _createState extends State<create> {
                     hintText: 'Name',
                     obscureText: false,
                     error: errorstr,
-                    isFilled: true,
-                    padding: 0,
+                    isFilled: false,
+                    padding: 0, border: true,
 
                     //errorText: _wrongemail ? "Wrong Email" : null,
                   ),
@@ -260,33 +261,33 @@ class _createState extends State<create> {
                                 controller: tec,
                                 focusNode: fn,
                                 decoration: InputDecoration(
-                                  enabledBorder: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
                                       borderSide: BorderSide(
-                                          width: 3, color: Colors.transparent)),
+                                          width: 1.5,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface
+                                              .withOpacity(0.08))),
                                   errorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.transparent, width: 2.0),
+                                        color: Colors.red, width: 2.0),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
+                                        BorderRadius.all(Radius.circular(10)),
                                   ),
-                                  focusedBorder: const OutlineInputBorder(
+                                  focusedBorder: OutlineInputBorder(
                                     //<-- SEE HERE
                                     borderSide: BorderSide(
-                                        width: 3, color: Colors.transparent),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
+                                        width: 2,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .inverseSurface
+                                            .withOpacity(0.08)),
+                                    borderRadius: const BorderRadius.all(
+                                        Radius.circular(10)),
                                   ),
-                                  focusedErrorBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent, width: 2.0),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                  ),
-                                  fillColor: Theme.of(context)
-                                      .colorScheme
-                                      .inverseSurface,
+
                                   //helperText: 'Enter language...',
 
                                   hintText: member.hasTags
@@ -450,33 +451,22 @@ class _createState extends State<create> {
                                 controller: tec,
                                 focusNode: fn,
                                 decoration: InputDecoration(
-                                  enabledBorder: const OutlineInputBorder(
-                                      borderRadius:
-                                          BorderRadius.all(Radius.circular(20)),
+                                  enabledBorder: OutlineInputBorder(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(10)),
                                       borderSide: BorderSide(
-                                          width: 3, color: Colors.transparent)),
+                                          width: 1.5,
+                                          color: Theme.of(context)
+                                              .colorScheme
+                                              .inverseSurface
+                                              .withOpacity(0.08))),
                                   errorBorder: const OutlineInputBorder(
                                     borderSide: BorderSide(
-                                        color: Colors.transparent, width: 2.0),
+                                        color: Colors.red, width: 2.0),
                                     borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
+                                        BorderRadius.all(Radius.circular(10)),
                                   ),
-                                  focusedBorder: const OutlineInputBorder(
-                                    //<-- SEE HERE
-                                    borderSide: BorderSide(
-                                        width: 3, color: Colors.transparent),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                  ),
-                                  focusedErrorBorder: const OutlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.transparent, width: 2.0),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(20)),
-                                  ),
-                                  fillColor: Theme.of(context)
-                                      .colorScheme
-                                      .inverseSurface,
+
                                   //helperText: 'Enter language...',
 
                                   hintText: contributor.hasTags

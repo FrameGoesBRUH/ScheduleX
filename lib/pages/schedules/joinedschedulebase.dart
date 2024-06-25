@@ -1,3 +1,5 @@
+import 'dart:math';
+import 'dart:developer' as dev;
 import 'package:flutter/material.dart';
 import 'package:schedulex/pages/schedules/components/members.dart';
 import 'package:schedulex/pages/schedules/viewevent.dart';
@@ -74,15 +76,9 @@ class _JoinedScheduleState extends State<JoinedSchedule> {
     member = evnetref['member'];
     //developer.log(member[1]);
 
-    contributor = shareddata['contributor'];
-
-    if (member.isEmpty) {
-      member.add("-");
-    }
-    if (contributor.isEmpty) {
-      contributor.add("-");
-    }
-
+    contributor = evnetref['contributor'];
+    contributor.add({"email": evnetref['owner']});
+    dev.log(contributor[0]["email"]);
     eventlist = evnetref['events'];
     final provider = Provider.of<EventProvider>(context, listen: false);
     provider.clearEvent();
@@ -205,11 +201,11 @@ class _JoinedScheduleState extends State<JoinedSchedule> {
                       padding: const EdgeInsets.all(10),
                       child: MemberButton(
                         text: contributor[index]["email"],
-                        uid: contributor[index]["uid"],
+                        uid: "",
                       )),
                 )),
                 const SizedBox(
-                  height: 20,
+                  height: 40,
                 ),
                 Text(
                   "Members",
@@ -218,9 +214,6 @@ class _JoinedScheduleState extends State<JoinedSchedule> {
                     fontWeight: FontWeight.bold,
                     fontSize: 22,
                   ),
-                ),
-                const SizedBox(
-                  height: 10,
                 ),
                 const SizedBox(
                   height: 10,

@@ -63,10 +63,11 @@ class _RegisterPageState extends State<RegisterPage> {
         FirebaseFirestore.instance.collection("schedules").doc();
     scheduleref.set({
       "owner": emailController.text.trim(),
-      "name": "Your Schedule",
+      "name": "Personal Schedule",
       "events": [],
       "member": [],
       "contributor": [],
+      "personal": true,
       "permission": {
         "canedit": true,
         "caninvite": false,
@@ -140,6 +141,10 @@ class _RegisterPageState extends State<RegisterPage> {
                       color: Theme.of(context).colorScheme.primary,
                       size: 100,
                       blurRadius: 40,
+                      glowColor: Theme.of(context)
+                          .colorScheme
+                          .primary
+                          .withOpacity(0.5),
                     ),
 
                     const SizedBox(height: 30),
@@ -161,7 +166,7 @@ class _RegisterPageState extends State<RegisterPage> {
                       hintText: 'Email',
                       obscureText: false,
                       error: null,
-                      isFilled: true,
+                      isFilled: false,
                       padding: 0,
                     ),
 
@@ -171,9 +176,14 @@ class _RegisterPageState extends State<RegisterPage> {
                     Container(
                         padding: const EdgeInsets.symmetric(horizontal: 0),
                         decoration: BoxDecoration(
-                          border: Border.all(color: Colors.transparent),
+                          border: Border.all(
+                              color: Theme.of(context)
+                                  .colorScheme
+                                  .inverseSurface
+                                  .withOpacity(0.08),
+                              width: 1.5),
                           borderRadius: BorderRadius.circular(10),
-                          color: Theme.of(context).colorScheme.secondary,
+                          color: Colors.transparent,
                         ),
                         child: Column(children: [
                           MyTextField(
@@ -181,7 +191,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             hintText: 'Password',
                             obscureText: true,
                             error: null,
-                            isFilled: false,
+                            isFilled: null,
                             padding: 0,
                           ),
                           Container(
@@ -197,7 +207,7 @@ class _RegisterPageState extends State<RegisterPage> {
                             hintText: 'Confirm Password',
                             obscureText: true,
                             error: showTextError("unmatchpass"),
-                            isFilled: false,
+                            isFilled: null,
                             padding: 0,
                           )
                         ])),
@@ -285,7 +295,11 @@ class _RegisterPageState extends State<RegisterPage> {
                       children: [
                         Text(
                           'Already have an account?',
-                          style: Theme.of(context).textTheme.displaySmall,
+                          style: TextStyle(
+                            color: Theme.of(context).colorScheme.inverseSurface,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                          ),
                         ),
                         const SizedBox(width: 4),
                         GestureDetector(

@@ -192,11 +192,11 @@ class _HomePageState extends State<HomePage> {
               setState(() {
                 //dev.log('onEnd');
                 fromtime = const TimeOfDay(hour: 0, minute: 0);
-                totime = " - 00:00";
+                totime = "";
                 email = "@dev";
                 note = "-";
 
-                name = "No Current Event";
+                name = "No Event";
                 //exit = false;
               });
             }
@@ -361,7 +361,7 @@ class _HomePageState extends State<HomePage> {
               Center(
                   child: Container(
                       width: (MediaQuery.of(context).size.width),
-                      margin: const EdgeInsets.symmetric(horizontal: 30),
+                      margin: const EdgeInsets.symmetric(horizontal: 20),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
@@ -373,7 +373,7 @@ class _HomePageState extends State<HomePage> {
                               glowColor: Theme.of(context)
                                   .colorScheme
                                   .surface
-                                  .withOpacity(.8),
+                                  .withOpacity(.3),
                               borderRadius:
                                   const BorderRadius.all(Radius.circular(30)),
                               child: Padding(
@@ -393,10 +393,10 @@ class _HomePageState extends State<HomePage> {
                                                 children: [
                                                   Flexible(
                                                     child: Text(name.toString(),
-                                                        overflow: TextOverflow
-                                                            .ellipsis,
+                                                        overflow:
+                                                            TextOverflow.fade,
                                                         style: GoogleFonts.lato(
-                                                          fontSize: 30,
+                                                          fontSize: 25,
                                                           color: Theme.of(
                                                                   context)
                                                               .colorScheme
@@ -411,7 +411,7 @@ class _HomePageState extends State<HomePage> {
                                                         overflow: TextOverflow
                                                             .ellipsis,
                                                         style: GoogleFonts.lato(
-                                                          fontSize: 18,
+                                                          fontSize: 15,
                                                           color: Theme.of(
                                                                   context)
                                                               .colorScheme
@@ -422,17 +422,17 @@ class _HomePageState extends State<HomePage> {
                                                         )),
                                                   ),
                                                 ]),
-                                            const SizedBox(height: 4),
+                                            const SizedBox(height: 8),
                                             Text(
                                                 '${fromtime.hour.toString().padLeft(2, '0')}:${fromtime.minute.toString().padLeft(2, '0')}$totime',
                                                 style: GoogleFonts.lato(
-                                                  fontSize: 20,
+                                                  fontSize: 18,
                                                   color: Theme.of(context)
                                                       .colorScheme
                                                       .inversePrimary,
                                                   fontWeight: FontWeight.w400,
                                                 )),
-                                            const SizedBox(height: 24),
+                                            const SizedBox(height: 20),
                                             Text(email,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: GoogleFonts.lato(
@@ -442,7 +442,7 @@ class _HomePageState extends State<HomePage> {
                                                       .tertiary,
                                                   fontWeight: FontWeight.w600,
                                                 )),
-                                            const SizedBox(height: 18),
+                                            const SizedBox(height: 5),
                                             Divider(
                                               thickness: 1,
                                               color: Theme.of(context)
